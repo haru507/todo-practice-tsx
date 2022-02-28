@@ -1,20 +1,27 @@
-import { ActionType } from '../action-types';
+import { Task } from "../../common/types";
+import { ActionType } from "../action-types";
 
-interface SearchRepositoriesAction {
-  type: ActionType.SEARCH_REPOSITORIES;
+interface LoadTaskAction {
+  type: ActionType.LOAD_TASK;
 }
 
-interface SearchRepositoriesSuccessAction {
-  type: ActionType.SEARCH_REPOSITORIES_SUCCESS;
-  payload: string;
+interface AddTaskAction {
+  type: ActionType.ADD_TASK;
+  payload: Task;
 }
 
-interface SearchRepositoriesErrorAction {
-  type: ActionType.SEARCH_REPOSITORIES_ERROR;
+interface GetTasksAction {
+  type: ActionType.GET_TASKS;
+  payload: Task[];
+}
+
+interface LoadErrorAction {
+  type: ActionType.LOAD_ERROR;
   payload: string;
 }
 
 export type Action =
-  | SearchRepositoriesAction
-  | SearchRepositoriesSuccessAction
-  | SearchRepositoriesErrorAction;
+  | LoadTaskAction
+  | AddTaskAction
+  | GetTasksAction
+  | LoadErrorAction;
