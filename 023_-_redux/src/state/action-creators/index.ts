@@ -81,3 +81,40 @@ export const getTasks = () => {
 };
 
 // TODO: removeAction, updateAction 追加
+export const updateTask = (task: Task) => {
+  return async (dispatch: Dispatch<Action>) => {
+    dispatch({ type: ActionType.LOAD_TASK });
+
+    try {
+      const res = await axios.put(`${url}/task/${task.id}/update`, task, {
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+          "Access-Control-Allow-Origin": "*",
+        },
+      });
+      console.log(res.data);
+      dispatch({ type: ActionType.UPDATE_TASK, payload: task });
+    } catch (err: any) {
+      dispatch({ type: ActionType.LOAD_ERROR, payload: err });
+    }
+  };
+};
+
+export const deleteTask = (id: number) => {
+  return async (dispatch: Dispatch<Action>) => {
+    dispatch({ type: ActionType.LOAD_TASK });
+
+    try {
+      const res = await axios.delete(`${url}/task/${id}`, {
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+          "Access-Control-Allow-Origin": "*",
+        },
+      });
+      console.log(res.data);
+      dispatch({ type: ActionType.DELETE_TASK, payload: id });
+    } catch (err: any) {
+      dispatch({ type: ActionType.LOAD_ERROR, payload: err });
+    }
+  };
+};

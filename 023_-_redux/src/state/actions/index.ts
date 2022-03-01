@@ -20,8 +20,20 @@ interface LoadErrorAction {
   payload: string;
 }
 
+interface UpdateTaskAction {
+  type: ActionType.UPDATE_TASK;
+  payload: Task;
+}
+
+interface DeleteTaskAction {
+  type: ActionType.DELETE_TASK;
+  payload: number;
+}
+
 export type Action =
   | LoadTaskAction
   | AddTaskAction
   | GetTasksAction
-  | LoadErrorAction;
+  | LoadErrorAction
+  | UpdateTaskAction
+  | DeleteTaskAction;

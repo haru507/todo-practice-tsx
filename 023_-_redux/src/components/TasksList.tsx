@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTypedSelector } from "../hooks/useTypedSelector";
 import { useActions } from "../hooks/useActions";
 import { Task } from "../common/types";
 
 const TasksList: React.FC = () => {
   const [title, setTitle] = useState("");
-  const { addTask, getTasks } = useActions();
+  const { addTask, getTasks, updateTask, deleteTask } = useActions();
   const { data, error, loading } = useTypedSelector(
     (state) => state.repositories
   );
@@ -47,8 +47,8 @@ const TasksList: React.FC = () => {
               value={task.title}
               onChange={(e) => taskListUpdate(task.id, e.target.value)}
             />
-            <button onClick={() => console.log(task.title)}>更新</button>
-            <button onClick={() => console.log(task.id)}>削除</button>
+            <button onClick={() => updateTask(task)}>更新</button>
+            <button onClick={() => deleteTask(task.id)}>削除</button>
           </div>
         ))}
     </div>
