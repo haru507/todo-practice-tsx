@@ -1,4 +1,4 @@
-export enum ActionType {
+export enum TasksActionType {
   LOAD_TASK = "load_task",
   GET_TASKS = "get_tasks",
   ADD_TASK = "add_task",

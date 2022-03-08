@@ -1,16 +1,16 @@
 import axios from "axios";
 import { Dispatch } from "redux";
-import { ActionType } from "../action-types";
-import { Action } from "../actions";
+import { TasksActionType } from "../action-types/tasks";
+import { TasksAction } from "../actions/tasks";
 import { SERVER_URL } from "../../common/envToText";
 import { Task } from "../../common/types";
 
 const url: string = SERVER_URL.key;
 
 export const addTask = (title: string) => {
-  return async (dispatch: Dispatch<Action>) => {
+  return async (dispatch: Dispatch<TasksAction>) => {
     dispatch({
-      type: ActionType.LOAD_TASK,
+      type: TasksActionType.LOAD_TASK,
     });
 
     try {
@@ -38,12 +38,12 @@ export const addTask = (title: string) => {
       };
 
       dispatch({
-        type: ActionType.ADD_TASK,
+        type: TasksActionType.ADD_TASK,
         payload: task,
       });
     } catch (err: any) {
       dispatch({
-        type: ActionType.LOAD_ERROR,
+        type: TasksActionType.LOAD_ERROR,
         payload: err.message,
       });
     }
@@ -51,9 +51,9 @@ export const addTask = (title: string) => {
 };
 
 export const getTasks = () => {
-  return async (dispatch: Dispatch<Action>) => {
+  return async (dispatch: Dispatch<TasksAction>) => {
     dispatch({
-      type: ActionType.LOAD_TASK,
+      type: TasksActionType.LOAD_TASK,
     });
 
     try {
@@ -68,12 +68,12 @@ export const getTasks = () => {
       console.log(data);
 
       dispatch({
-        type: ActionType.GET_TASKS,
+        type: TasksActionType.GET_TASKS,
         payload: data,
       });
     } catch (err: any) {
       dispatch({
-        type: ActionType.LOAD_ERROR,
+        type: TasksActionType.LOAD_ERROR,
         payload: err.message,
       });
     }
@@ -82,8 +82,8 @@ export const getTasks = () => {
 
 // TODO: removeAction, updateAction 追加
 export const updateTask = (task: Task) => {
-  return async (dispatch: Dispatch<Action>) => {
-    dispatch({ type: ActionType.LOAD_TASK });
+  return async (dispatch: Dispatch<TasksAction>) => {
+    dispatch({ type: TasksActionType.LOAD_TASK });
 
     try {
       const res = await axios.put(`${url}/task/${task.id}/update`, task, {
@@ -93,16 +93,16 @@ export const updateTask = (task: Task) => {
         },
       });
       console.log(res.data);
-      dispatch({ type: ActionType.UPDATE_TASK, payload: task });
+      dispatch({ type: TasksActionType.UPDATE_TASK, payload: task });
     } catch (err: any) {
-      dispatch({ type: ActionType.LOAD_ERROR, payload: err });
+      dispatch({ type: TasksActionType.LOAD_ERROR, payload: err });
     }
   };
 };
 
 export const deleteTask = (id: number) => {
-  return async (dispatch: Dispatch<Action>) => {
-    dispatch({ type: ActionType.LOAD_TASK });
+  return async (dispatch: Dispatch<TasksAction>) => {
+    dispatch({ type: TasksActionType.LOAD_TASK });
 
     try {
       const res = await axios.delete(`${url}/task/${id}`, {
@@ -112,9 +112,9 @@ export const deleteTask = (id: number) => {
         },
       });
       console.log(res.data);
-      dispatch({ type: ActionType.DELETE_TASK, payload: id });
+      dispatch({ type: TasksActionType.DELETE_TASK, payload: id });
     } catch (err: any) {
-      dispatch({ type: ActionType.LOAD_ERROR, payload: err });
+      dispatch({ type: TasksActionType.LOAD_ERROR, payload: err });
     }
   };
 };

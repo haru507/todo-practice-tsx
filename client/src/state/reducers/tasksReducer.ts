@@ -1,53 +1,48 @@
-import { Task } from "../../common/types";
-import { ActionType } from "../action-types";
-import { Action } from "../actions";
+import { TasksState } from "../../common/types";
+import { TasksActionType } from "../action-types/tasks";
+import { TasksAction } from "../actions/tasks";
+import { initialState } from "../initialState";
 
-interface TasksState {
-  loading: boolean;
-  error: string | null;
-  data: Task[];
-}
-
-const initialState = {
-  loading: false,
-  error: null,
-  data: [],
-};
-
-const reducer = (
+const TasksReducer = (
   state: TasksState = initialState,
-  action: Action
+  action: TasksAction
 ): TasksState => {
   switch (action.type) {
-    case ActionType.LOAD_TASK:
-      return { loading: true, error: null, data: [...state.data] };
-    case ActionType.ADD_TASK:
+    case TasksActionType.LOAD_TASK:
+      return { loading: true, error: null, tasks: [...state.tasks] };
+
+    case TasksActionType.ADD_TASK:
       return {
         loading: false,
         error: null,
-        data: [...state.data, action.payload],
+        tasks: [...state.tasks, action.payload],
       };
-    case ActionType.GET_TASKS:
-      return { loading: false, error: null, data: action.payload };
-    case ActionType.LOAD_ERROR:
-      return { loading: false, error: action.payload, data: [] };
-    case ActionType.UPDATE_TASK:
+
+    case TasksActionType.GET_TASKS:
+      return { loading: false, error: null, tasks: action.payload };
+
+    case TasksActionType.LOAD_ERROR:
+      return { loading: false, error: action.payload, tasks: [] };
+
+    case TasksActionType.UPDATE_TASK:
       return {
         loading: false,
         error: null,
-        data: state.data.map((task) =>
+        tasks: state.tasks.map((task) =>
           task.id === action.payload.id ? (task = action.payload) : task
         ),
       };
-    case ActionType.DELETE_TASK:
+
+    case TasksActionType.DELETE_TASK:
       return {
         loading: false,
         error: null,
-        data: state.data.filter((task) => task.id !== action.payload),
+        tasks: state.tasks.filter((task) => task.id !== action.payload),
       };
+
     default:
       return state;
   }
 };
 
-export default reducer;
+export default TasksReducer;
