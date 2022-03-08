@@ -1,14 +1,17 @@
+import { ConnectedRouter } from "connected-react-router";
 import { Provider } from "react-redux";
 import { store } from "../state";
-import TasksList from "./TasksList";
+import Tasks from "./pages/Tasks";
 
 const App = () => {
   return (
     <Provider store={store}>
-      <div>
-        <h1>Todo List</h1>
-        <TasksList />
-      </div>
+      <ConnectedRouter history={history}>
+        <div>
+          <h1>Todo List</h1>
+          <Tasks />
+        </div>
+      </ConnectedRouter>
     </Provider>
   );
 };
